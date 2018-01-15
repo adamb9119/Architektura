@@ -1,0 +1,7 @@
+{% if type == 'link' %}
+    <link {{attr | raw}}/>
+{% elseif type == 'base' %}
+    <base {{attr | raw}}/>
+{% else %}
+    <meta {{attr | raw}}/>
+{% endif %}

@@ -1,0 +1,14 @@
+app_architektura:
+    path: /
+    controller: App\Controller\AppController::indexAction
+app_architektura_register:
+    path: /register
+    controller: App\Controller\AppController::registerAction
+app_architektura_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+app_architektura_logout:
+    path: /logout
+app_architektura_admin_dashboard:
+    path: /admin
+    controller: App\Controller\AdminController::dashboardAction
