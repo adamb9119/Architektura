@@ -54,6 +54,10 @@ class User implements UserInterface, \Serializable
         // $this->salt = md5(uniqid('', true));
     }
     
+    public function getId(){
+        return $this->id;
+    }
+    
     public function getEmail()
     {
         return $this->email;
@@ -104,7 +108,7 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         if($this->getEmail() == 'admin@admin.pl'){
-            return array('ROLE_ADMIN');
+            return array('ROLE_ADMIN','ROLE_USER');
         }
         return array('ROLE_USER');
     }

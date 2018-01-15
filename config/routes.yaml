@@ -12,3 +12,9 @@ app_architektura_logout:
 app_architektura_admin_dashboard:
     path: /admin
     controller: App\Controller\AdminController::dashboardAction
+app_architektura_admin_profile:
+    path: /admin/profile
+    controller: App\Controller\AdminController::profile
+app_architektura_admin_survey_add:
+    path: /admin/survey/add
+    controller: App\Controller\SurveyController::add

@@ -1,11 +1,15 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    {{ form_start(form) }}
-        {{ form_row(form.username) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.plainPassword.first) }}
-        {{ form_row(form.plainPassword.second) }}
-        {{ form_row(form.register)}}
-    {{ form_end(form) }}
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-4">
+            {{ form_start(form, {attr: {novalidate: 'novalidate'} }) }}
+                {{ form_row(form.username) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.plainPassword.first) }}
+                {{ form_row(form.plainPassword.second) }}
+                {{ form_row(form.register)}}
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

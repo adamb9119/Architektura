@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Form\UserType;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Yaml\Yaml;
 /**
  * Description of LuckyController
  *
@@ -20,9 +20,19 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class AppController extends Controller
 {
+    
+    public function __construct() {
+        
+    }
+    
     public function indexAction()
     {
         $number = mt_rand(0, 100);
+        
+        $configDirectories = array('../config/');
+
+        $yamlUserFiles = Yaml::parseFile('../config/users.yml');
+        
         
         return $this->render('index.html.twig', array(
             'number' => $number,
