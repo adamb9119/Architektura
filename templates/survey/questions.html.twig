@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Survey questions "{{survey.title}}"{% endblock %}
+
+{% block content %}
+    <h2 class="page-title">Survey questions "{{survey.title}}"</h2>
+    <div class="questions-list">
+        <div class="questions-list__page">
+            <h5 class="questions-list__page__title text-center">
+                Page 1
+            </h5>
+            <ul class="questions-list__page__questions questions-list__page__questions__1 list-unstyled">
+            </ul>
+            <div class="questions-list__page__buttons text-center">
+                <a href="#" class="addQuestion btn btn-secondary">Add question</a>
+                <a href="#" class="btn btn-secondary">Remove page</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -6,6 +6,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="app_survey")
@@ -63,10 +64,24 @@ class Survey
      * @ORM\Column(name="status", type="integer", nullable=false, options={"unsigned":true,"default":0})
      */
     public $status;
-
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="survey")
+     */
+    private $questions;
+    
     public function __construct()
     {
         $this->status = 0;
+        $this->questions = new ArrayCollection();
+    }
+    
+    /**
+     * @return Collection|App\Entity\Question[]
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
     }
     
     public function getId(){

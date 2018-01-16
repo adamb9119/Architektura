@@ -1,0 +1,31 @@
+.questions-list{
+    background-color:white;
+    border:1px solid $gray;
+    border-radius:.25rem;
+    .questions-list__page{
+        .questions-list__page__title{
+            padding:15px 0px;
+            margin:0px;
+            background-color: rgba($gray, 0.03);
+            border-bottom:1px solid $gray;
+        }
+        .questions-list__page__questions{
+            margin:0px;
+            min-height: 20px;
+            .question{
+                border-bottom:1px solid $gray;
+                &:last-child{
+                    border: 0px;
+                }
+            }
+        }
+        .questions-list__page__buttons{
+            border-top:1px solid $gray;
+            background-color: rgba($gray, 0.03);
+            padding:10px;
+        }
+        .question{
+            padding:15px;
+        }
+    }
+}

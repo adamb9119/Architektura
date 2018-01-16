@@ -26,6 +26,17 @@ app_architektura_admin_survey_edit:
     controller: App\Controller\SurveyController::edit
     requirements:
         id: '\d+'
+app_architektura_admin_survey_questions:
+    path: /admin/survey/edit/{id}/questions
+    controller: App\Controller\SurveyController::questions
+    requirements:
+        id: '\d+'
+app_architektura_admin_ajax_question_add:
+    path: /admin/question/add
+    controller: App\Controller\SurveyController::ajaxAddQuestion
+app_architektura_admin_ajax_question_new_form:
+    path: /admin/question/form/new
+    controller: App\Controller\SurveyController::ajaxGetQuestionNewForm
         
         
 app_architektura_survey:

@@ -10,7 +10,9 @@ namespace App\Controller;
 
 use App\Form\SurveyType;
 use App\Form\EditSurveyType;
+use App\Form\QuestionNewType;
 use App\Entity\Survey;
+use App\Entity\Question;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -68,7 +70,7 @@ class SurveyController extends AppController{
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($survey);
             $em->flush();
@@ -83,6 +85,45 @@ class SurveyController extends AppController{
                'survey' => $survey
            ]
         );
+    }
+    
+    public function questions($id){
+        
+        $survey = $this->getDoctrine()->getRepository(Survey::class)->find($id);
+        
+        return $this->render(
+            'survey/questions.html.twig',
+           [
+               'survey' => $survey
+           ]
+        );
+    } 
+    
+    public function ajaxGetQuestionNewForm(){
+        
+        $form = $this->createForm(QuestionNewType::class);
+        
+        return $this->render(
+            'survey/questionNewForm.html.twig',
+           [
+               'form' => $form->createView()
+           ]
+        );
+        
+    }
+    
+    public function ajaxAddQuestion(Request $request){
+        
+        $form = $this->createForm(QuestionNewType::class, new Question());
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && !$form->isValid()){
+           
+            return new \Symfony\Component\HttpFoundation\Response(print_r( $form->getErrors(true),true));
+            
+        }
+        
+        return new \Symfony\Component\HttpFoundation\Response(print_r($request,true));
     }
     
 }
