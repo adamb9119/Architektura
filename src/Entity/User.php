@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\UserMeta;
 
 /**
  * @ORM\Table(name="app_users")
@@ -46,13 +48,29 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Usermeta", mappedBy="user")
+     */
+    private $usermeta;
+
 
     public function __construct()
     {
         $this->isActive = true;
+        $this->usermeta = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
+    
+    /**
+     * @return Collection|Usermeta[]
+     */
+    public function getUsermeta()
+    {
+        return $this->usermeta;
+    }
+
     
     public function getId(){
         return $this->id;

@@ -15,6 +15,21 @@ app_architektura_admin_dashboard:
 app_architektura_admin_profile:
     path: /admin/profile
     controller: App\Controller\AdminController::profile
+app_architektura_admin_survey_list:
+    path: /admin/survey/list
+    controller: App\Controller\SurveyController::surveyList
 app_architektura_admin_survey_add:
     path: /admin/survey/add
     controller: App\Controller\SurveyController::add
+app_architektura_admin_survey_edit:
+    path: /admin/survey/edit/{id}
+    controller: App\Controller\SurveyController::edit
+    requirements:
+        id: '\d+'
+        
+        
+app_architektura_survey:
+    path: /survey/{id}/{slug}
+    controller: App\Controller\SurveyController::edit
+    requirements:
+        id: '\d+'

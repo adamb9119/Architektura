@@ -9,6 +9,9 @@
 namespace App\Controller;
 
 use App\Form\UserType;
+use App\Entity\Category;
+use App\Entity\Product;
+use App\Entity\Usermeta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -34,6 +37,43 @@ class AdminController extends AppController{
     }
     
     public function profile(Request $request, UserPasswordEncoderInterface $passwordEncoder){
+
+        $product = new Usermeta();
+        $product->setName('Keyboard');
+
+        // relate this product to the category
+        $product->setUser($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->flush();
+        
+//         $category = new Category();
+//        $category->setName('Computer Peripherals');
+//
+//        $product = new Product();
+//        $product->setName('Keyboard');
+//
+//        // relate this product to the category
+//        $product->setCategory($category);
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($category);
+//        $em->persist($product);
+//        $em->flush();
+//
+//        return new Response(
+//            'Saved new product with id: '.$product->getId()
+//            .' and new category with id: '.$category->getId()
+//        );
+        
+//        $product = $this->getDoctrine()
+//        ->getRepository(Product::class)
+//        ->find(1);
+//
+//        
+//        $category = $product->getCategory();
+//        echo $category;
         
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);

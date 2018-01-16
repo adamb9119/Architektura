@@ -30,6 +30,11 @@ Encore
     .addEntry('main', './assets/ts/main.ts')
 
     .enableTypeScriptLoader()
+    .autoProvideVariables({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery'
+    })
 ;
 // export the final configuration
 module.exports = Encore.getWebpackConfig();

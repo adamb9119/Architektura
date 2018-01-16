@@ -11,3 +11,14 @@ body{
     font-size: 0.8em;
     text-align: center;
 }
+form legend{
+    font-size: inherit;
+}
+
+.page-title{
+    margin-bottom: 15px;
+}
+.ck-editor__main .ck-editor__editable{
+    padding-top: 15px;
+    min-height:150px;
+}

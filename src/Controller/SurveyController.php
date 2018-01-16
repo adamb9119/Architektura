@@ -8,20 +8,32 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Form\SurveyType;
+use App\Form\EditSurveyType;
 use App\Entity\Survey;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Description of SurveyController
  *
  * @author Adam
  */
-class SurveyController extends Controller{
+class SurveyController extends AppController{
     
-    public function add(Request $request, \Swift_Mailer $mailer){
+    public function surveyList(){
         
+        $surveys = $this->getDoctrine()->getRepository(Survey::class)->findAll();
+        
+        return $this->render(
+            'survey/list.html.twig',
+            [
+                'surveys' => $surveys
+            ]
+        );
+    }
+    
+    public function add(Request $request){
         
         // 1) build the form
         $survey = new Survey();
@@ -34,12 +46,42 @@ class SurveyController extends Controller{
             $em = $this->getDoctrine()->getManager();
             $em->persist($survey);
             $em->flush();
-
+            
+            return $this->redirectToRoute('app_architektura_admin_survey_edit', array('id' => $survey->getId()));
+            
         }
 
         return $this->render(
             'survey/add.html.twig',
             array('form' => $form->createView())
+        );
+    }
+    
+    public function edit($id, Request $request){
+        
+        $session = new Session();
+        // 1) build the form
+        $survey = $this->getDoctrine()->getRepository(Survey::class)->find($id);
+        
+        $form = $this->createForm(EditSurveyType::class, $survey);
+
+        // 2) handle the submit (will only happen on POST)
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($survey);
+            $em->flush();
+
+            $session->getFlashBag()->add('notice', 'Survey updated!');
+        }
+
+        return $this->render(
+            'survey/edit.html.twig',
+           [
+               'form' => $form->createView(),
+               'survey' => $survey
+           ]
         );
     }
     

@@ -13,6 +13,7 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Description of LuckyController
  *
@@ -20,9 +21,10 @@ use Symfony\Component\Yaml\Yaml;
  */
 class AppController extends Controller
 {
-    
+
+
     public function __construct() {
-        
+       
     }
     
     public function indexAction()
@@ -75,4 +77,13 @@ class AppController extends Controller
         );
     }
     
+    public function getMessages(){
+        $session = new Session();
+        
+        return $this->render(
+            'other/messages.html.twig',
+            array('messages' => $session->getFlashBag()->get('notice', array()))
+        );
+        
+    }
 }

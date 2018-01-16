@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Survey list{% endblock %}
+
+{% block content %}
+    <h2>Survey list</h2>
+    <p>This yours survey created list</p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Link</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for survey in surveys %}
+            <tr>
+                <td>
+                    {{survey.title}}<br/>
+                    <a href="{{ path('app_architektura_admin_survey_edit', {'id': survey.getId()}) }}">Edit</a> | 
+                    <a href="{{ path('app_architektura_admin_survey_edit', {'id': survey.getId()}) }}">Questions</a> | 
+                    <a href="{{ path('app_architektura_admin_survey_edit', {'id': survey.getId()}) }}">Summary</a> | 
+                    <a href="{{ path('app_architektura_admin_survey_edit', {'id': survey.getId()}) }}">Remove</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}">{{ path('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}</a>
+                </td>
+                <td>
+                    {% if survey.status == 0 %}
+                        Build
+                    {% elseif survey.status == 1 %}
+                        Publish
+                    {% elseif survey.status == 2 %}
+                        Summary
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
