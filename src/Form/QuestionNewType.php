@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class QuestionNewType extends AbstractType
@@ -25,6 +26,8 @@ class QuestionNewType extends AbstractType
                 ],
                 'placeholder' => 'Choose type',
             ])
+            ->add('number', HiddenType::class)
+            ->add('page', HiddenType::class)
             ->add('add', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn-primary'

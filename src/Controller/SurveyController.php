@@ -15,6 +15,7 @@ use App\Entity\Survey;
 use App\Entity\Question;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Description of SurveyController
@@ -112,18 +113,37 @@ class SurveyController extends AppController{
         
     }
     
-    public function ajaxAddQuestion(Request $request){
+    public function ajaxAddQuestion($id, Request $request){
         
         $form = $this->createForm(QuestionNewType::class, new Question());
         $form->handleRequest($request);
         
-        if($form->isSubmitted() && !$form->isValid()){
+        if($form->isSubmitted()){
+            
+            if(!$form->isValid()){
+                
+                return new JsonResponse([
+                    'code' => '201',
+                    'data' => 'The form contains errors!'
+                ]);
+                
+            }
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
            
-            return new \Symfony\Component\HttpFoundation\Response(print_r( $form->getErrors(true),true));
+            return new JsonResponse([
+                'code' => '200',
+                'data' => 'Question added!'
+            ]);
             
         }
         
-        return new \Symfony\Component\HttpFoundation\Response(print_r($request,true));
+        return new JsonResponse([
+            'code' => '500',
+            'data' => 'Form is didn\'t submit!'
+        ]);
     }
     
 }

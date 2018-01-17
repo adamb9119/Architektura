@@ -1,17 +1,24 @@
+import Config from './declare';
+import {AjaxJsonResult} from './ajaxResult';
+
 export class Question{
 
     constructor(){
         
     }
 
-    getNewForm(success:Function){
+    getNewForm(page:number, order:number, success:Function){
         let request = $.ajax({
-            url: '/index.php/admin/question/form/new',
+            url: Config.routes.newQuestionForm,
             dataType: 'html'
         });
         
         request.done(function(data){
-            success(data);
+            let form = jQuery(data);
+            form.find('#question_new_number').val(order);
+            form.find('#question_new_page').val(page);
+
+            success(form);
         });
     }
 

@@ -56,7 +56,7 @@ class Question
      * @Assert\NotBlank()
      * @Assert\Length(max=500)
      */
-    public $order;
+    public $number;
     
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Survey", inversedBy="questions")
