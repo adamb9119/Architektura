@@ -20,11 +20,11 @@
                     {{survey.title}}<br/>
                     <a href="{{ path('app_architektura_admin_survey_edit', {'id': survey.getId()}) }}">Edit</a> | 
                     <a href="{{ path('app_architektura_admin_survey_questions', {'id': survey.getId()}) }}">Questions</a> | 
-                    <a href="{{ path('app_architektura_admin_survey_edit', {'id': survey.getId()}) }}">Summary</a> | 
-                    <a href="{{ path('app_architektura_admin_survey_edit', {'id': survey.getId()}) }}">Remove</a>
+                    <a href="{{ path('app_architektura_admin_survey_summary', {'id': survey.getId()}) }}">Summary</a> | 
+                    <a href="{{ path('app_architektura_admin_survey_remove', {'id': survey.getId()}) }}" class="prealert" data-title="Alert" data-message="Survey will been removed permanently. You are sure?">Remove</a>
                 </td>
                 <td>
-                    <a href="{{ path('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}">{{ path('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}</a>
+                    <a target="_blank" href="{{ path('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}">{{ url('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}</a>
                 </td>
                 <td>
                     {% if survey.status == 0 %}

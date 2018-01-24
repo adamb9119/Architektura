@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            
+            <title>{% block title %}{% endblock %} - SimpleForms.pl</title>
+            {% if meta is defined %}
+                {{ metatags(meta) | raw }}
+            {% endif %}
+            
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+            <link rel="stylesheet" href="/build/main.css">
+            <script>
+                var BASE_URL = '{{ absolute_url('/') }}';
+            </script>
+            
+        {% endblock %}
+    </head>
+    <body>
+        {{ render(controller('App\\Controller\\AppController::getMessages')) }}
+        <div id="content" class="container">{% block content %}{% endblock %}</div>
+        <div id="footer" class="container">
+            {% block footer %}
+                Copyright &copy; 2018 SimpleForm.pl
+            {% endblock %}
+        </div>
+        <script src="/build/main.js"></script>
+        <script src="/build/app.js?v={{ "now"|date("mdYgia") }}"></script>
+    </body>
+</html>

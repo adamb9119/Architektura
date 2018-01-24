@@ -1,0 +1,10 @@
+{% extends "front-base.html.twig" %}
+
+{% block title %}{{ survey.title }}{% endblock %}
+
+
+{% block content %}
+    <div id="survey-front">
+        {% block form %}{% endblock %}
+    </div>
+{% endblock %}

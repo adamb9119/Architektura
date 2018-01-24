@@ -35,19 +35,6 @@ class EditSurveyType extends AbstractType
                     'class' => 'text-editor'
                 ]
             ])
-            ->add('notify', ChoiceType::class, [
-                'choices' => [
-                    'Email' => 'email',
-                    'WebPush' => 'webpush',
-                ],
-                'label' => 'Notification methods',
-                'label_attr' => [
-                    'class' => 'asdasdad'
-                ],
-                'multiple' => true,
-                'expanded' => true,
-                
-            ])
             ->add('date_start', TextType::class, [
                 'attr' => [
                     'class' => 'datetimepicker'

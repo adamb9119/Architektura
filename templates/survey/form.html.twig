@@ -1,0 +1,18 @@
+{% extends "survey.html.twig" %}
+
+{% block form %}
+    
+    <h1 class="text-center">{{ survey.title }}</h1>
+    {% if survey.entry_text and page == 0 %}
+    <div class="entry">
+        {{survey.entry_text | raw}}
+    </div>
+    {% endif %}
+    <form action="" method="post">
+        
+        <div class="submit-section">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </form>
+
+{% endblock %}

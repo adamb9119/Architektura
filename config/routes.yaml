@@ -26,6 +26,25 @@ app_architektura_admin_survey_edit:
     controller: App\Controller\SurveyController::edit
     requirements:
         id: '\d+'
+app_architektura_admin_survey_remove:
+    path: /admin/survey/remove/{id}
+    controller: App\Controller\SurveyController::remove
+    requirements:
+        id: '\d+'
+app_architektura_admin_survey_summary:
+    path: /admin/survey/summary/{id}
+    controller: App\Controller\SummaryController::summary
+    requirements:
+        id: '\d+'
+        
+app_architektura_admin_survey_summary_ajax_views:
+    path: /admin/ajax/survey/summary/views/{id}
+    controller: App\Controller\SummaryController::getViews
+    requirements:
+        id: '\d+'
+        
+        
+    
 app_architektura_admin_survey_questions:
     path: /admin/survey/edit/{id}/questions
     controller: App\Controller\SurveyController::questions
@@ -43,6 +62,34 @@ app_architektura_admin_ajax_question_new_form:
         
 app_architektura_survey:
     path: /survey/{id}/{slug}
-    controller: App\Controller\SurveyController::edit
+    controller: App\Controller\FrontController::getSurvey
+    requirements:
+        id: '\d+'
+    defaults:
+        slug: ''
+app_architektura_survey_pages:
+    path: /survey/{id}/{slug}/page/{page}
+    controller: App\Controller\FrontController::getSurvey
+    requirements:
+        id: '\d+'
+    defaults:
+        slug: ''        
+        page: 1
+
+        
+app_architektura_superadmin_survey_list:
+    path: /admin/all/survey
+    controller: App\Controller\SuperAdminController::surveyList
+app_architektura_superadmin_users_list:
+    path: /admin/all/users
+    controller: App\Controller\SuperAdminController::usersList
+app_architektura_superadmin_user_remove:
+    path: /admin/user/remove/{id}
+    controller: App\Controller\SuperAdminController::userRemove
+    requirements:
+        id: '\d+'
+app_architektura_superadmin_user_change_active:
+    path: /admin/user/active/{id}
+    controller: App\Controller\SuperAdminController::userToggleActive
     requirements:
         id: '\d+'

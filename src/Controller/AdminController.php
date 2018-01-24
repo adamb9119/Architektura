@@ -9,8 +9,6 @@
 namespace App\Controller;
 
 use App\Form\UserType;
-use App\Entity\Category;
-use App\Entity\Product;
 use App\Entity\Usermeta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;

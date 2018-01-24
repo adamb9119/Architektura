@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Cocur\Slugify\Slugify;
+use App\Entity\User;
+use App\Entity\Log;
 
 /**
  * @ORM\Table(name="app_survey")
@@ -33,7 +36,7 @@ class Survey
      * @Assert\NotBlank()
      * @Assert\Length(max=250)
      */
-    public $slug;
+    private $slug;
     
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -70,10 +73,22 @@ class Survey
      */
     private $questions;
     
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="survey")
+     */
+    private $logs;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="surveys")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+    
     public function __construct()
     {
         $this->status = 0;
         $this->questions = new ArrayCollection();
+        $this->logs = new ArrayCollection();
     }
     
     /**
@@ -83,6 +98,25 @@ class Survey
     {
         return $this->questions;
     }
+    
+    /**
+     * @return Collection|App\Entity\Log[]
+     */
+    public function getLogs()
+    {
+        return $this->logs;
+    }
+    
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
+    
     
     public function getId(){
         return $this->id;
@@ -112,4 +146,14 @@ class Survey
     public function setDateEnd($date){
         $this->date_end = new DateTime($date);
     }
+    
+    public function setSlug($slug){
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($slug);
+    }
+    
+    public function getSlug(){
+        return $this->slug;
+    }
+    
 }

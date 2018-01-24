@@ -1,3 +1,4 @@
+@import "../.././node_modules/font-awesome-sass/assets/stylesheets/font-awesome";
 @import 'variables';
 @import 'questions';
 
@@ -22,4 +23,97 @@ form legend{
 .ck-editor__main .ck-editor__editable{
     padding-top: 15px;
     min-height:150px;
+}
+
+#survey-front{
+    width:600px;
+    margin:0px auto;
+    border:2px solid $primary;
+    border-radius: 5px;
+    h1{
+        background-color: $primary;
+        padding:10px;
+        color:white;
+        font-size: 24px;
+        margin:0px 0px 15px 0px;
+    }
+    .entry{
+        padding:0px 15px;
+    }
+    .submit-section{
+        padding:15px 0px;
+        text-align: center;
+    }
+}
+
+#root{
+    .page{
+        border:1px solid $primary;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        .page-title{
+            font-size: 20px;
+            color:white;
+            margin:0px 0px 15px 0px;
+            background-color: $primary;
+            padding:10px 0px;
+            position: relative;
+            .buttons{
+                position: absolute;
+                display: none;
+                top:3px;
+                right: 0px;
+                padding-right: 3px;
+                button:last-child{
+                    margin-left: 3px;
+                }
+            }
+        }
+        .add-question{
+            margin:15px 0px;
+        }
+    }
+    .form-edit-question{
+        padding:15px;
+        position: relative;
+        .left{
+            padding-right:300px;
+        }
+        .right{
+            position: absolute;
+            top:0px;
+            right: 0px;
+            width:300px;
+            padding:15px;
+        }
+        .buttons-bottom{
+            text-align: right;
+        }
+    }
+    .add-page-button{
+        margin: 0px 0px 15px 0px;
+        button{
+            width: 100%;
+        }
+    }
+    .sorting-buttons{
+        margin-bottom: 15px;
+    }
+}
+
+#root{
+    .page-sorting{
+        .page{
+            .page-title{
+                margin-bottom: 0px;
+                .buttons{
+                    display: block;
+                }
+            }
+        }
+        .questions-list, .add-question-block{
+            display: none;
+        }
+        
+    }
 }

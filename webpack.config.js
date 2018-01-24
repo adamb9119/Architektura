@@ -25,12 +25,15 @@ Encore
     // create hashed filenames (e.g. app.abc123.css)
     // .enableVersioning()
     .addEntry('main', './assets/ts/main.ts')
-    .addEntry('app', './assets/jsx/app.jsx')
+    .addEntry('app', './assets/jsx/app.js')
     .enableTypeScriptLoader()
     .autoProvideVariables({
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery'
+    })
+    .configureBabel(function(babelConfig){
+        babelConfig.presets.push('stage-2');
     })
     .enableReactPreset()
 ;

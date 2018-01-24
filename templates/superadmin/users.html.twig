@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}User list{% endblock %}
+
+{% block content %}
+    <h2>User list</h2>
+    <p>This all user system list</p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col" class="text-center">Is active</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>
+                    {{user.username}}<br/>   
+                    <a href="{{ path('app_architektura_superadmin_user_change_active', {'id': user.getId()}) }}">Toggle Active</a> | 
+                    <a href="{{ path('app_architektura_superadmin_user_remove', {'id': user.getId()}) }}" class="prealert" data-title="Alert" data-message="User will been removed permanently. You are sure?">Remove</a>
+                </td>
+                <td>
+                    {{user.email}}
+                </td>
+                <td class="text-center">
+                    {% if user.isActive == 0 %}
+                        Blocked
+                    {% elseif user.isActive == 1 %}
+                        Active
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+{% block title %}Summary{% endblock %}
+{% block content %}
+    <div id="summary-survey">
+        <script>
+            var SURVEY_ID = {{survey.getId()}};
+        </script>
+        <div id="app-summary">
+        </div>
+    </div>
+{% endblock %}

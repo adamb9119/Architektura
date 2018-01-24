@@ -16,6 +16,8 @@ use App\Entity\Question;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Psr\Log\LoggerInterface;
+
 
 /**
  * Description of SurveyController
@@ -26,7 +28,8 @@ class SurveyController extends AppController{
     
     public function surveyList(){
         
-        $surveys = $this->getDoctrine()->getRepository(Survey::class)->findAll();
+        $user = $this->getUser();
+        $surveys = $user->getSurveys();
         
         return $this->render(
             'survey/list.html.twig',
@@ -47,6 +50,8 @@ class SurveyController extends AppController{
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
+            $survey->setUser($user);
             $em->persist($survey);
             $em->flush();
             
@@ -63,7 +68,7 @@ class SurveyController extends AppController{
     public function edit($id, Request $request){
         
         $session = new Session();
-        // 1) build the form
+        
         $survey = $this->getDoctrine()->getRepository(Survey::class)->find($id);
         
         $form = $this->createForm(EditSurveyType::class, $survey);
@@ -86,6 +91,17 @@ class SurveyController extends AppController{
                'survey' => $survey
            ]
         );
+    }
+    
+    public function remove($id){
+        
+        $survey = $this->getDoctrine()->getRepository(Survey::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($survey);
+        $em->flush();
+        
+        return $this->redirectToRoute('app_architektura_admin_survey_list');
+  
     }
     
     public function questions($id){
@@ -113,37 +129,17 @@ class SurveyController extends AppController{
         
     }
     
-    public function ajaxAddQuestion($id, Request $request){
+    public function ajaxAddQuestion($id, Request $request, LoggerInterface $logger){
+        $request->request->replace(json_decode($request->getContent(), true));
         
-        $form = $this->createForm(QuestionNewType::class, new Question());
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted()){
-            
-            if(!$form->isValid()){
-                
-                return new JsonResponse([
-                    'code' => '201',
-                    'data' => 'The form contains errors!'
-                ]);
-                
-            }
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
-            $em->flush();
-           
-            return new JsonResponse([
-                'code' => '200',
-                'data' => 'Question added!'
-            ]);
-            
-        }
-        
+        $logger->debug('AjaxAddQuestion', $request->request->all());
         return new JsonResponse([
-            'code' => '500',
-            'data' => 'Form is didn\'t submit!'
+            'code' => '200',
+            'data' => 'Question added!' .  $request->request->get('title'),
+            'response' => $request->request->all()
         ]);
+            
+        
     }
     
 }

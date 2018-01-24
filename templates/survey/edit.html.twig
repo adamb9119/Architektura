@@ -14,7 +14,7 @@
                 Link
             </div>
             <div class="col-sm-10">
-                <a href="{{ path('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}">{{ path('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}</a>
+                <a target="_blank" id="edit_survey_slug_target" href="{{ path('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}"  data-href="{{ url('app_architektura_survey', {id: survey.getId()}) }}">{{ url('app_architektura_survey', {id: survey.getId(), slug: survey.slug}) }}</a>
             </div>
         </div>
         {{ form_row(form.entry_text)}}
@@ -22,7 +22,6 @@
         {{ form_row(form.date_start)}}
         {{ form_row(form.date_end)}}
         {{ form_row(form.status)}}
-        {{ form_row(form.notify)}}
         {{ form_row(form.save)}}
     {{ form_end(form) }}
 {% endblock %}
