@@ -13,6 +13,7 @@ use App\Form\EditSurveyType;
 use App\Form\QuestionNewType;
 use App\Entity\Survey;
 use App\Entity\Question;
+use App\Entity\Answer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -129,17 +130,82 @@ class SurveyController extends AppController{
         
     }
     
-    public function ajaxAddQuestion($id, Request $request, LoggerInterface $logger){
-        $request->request->replace(json_decode($request->getContent(), true));
+    public function ajaxAllQuestion($id, LoggerInterface $logger){
+        $em = $this->getDoctrine()->getManager();
+        $survey = $em->getRepository(Survey::class)->find($id);
+        $questions = $survey->getQuestionsInPagesArray();
         
-        $logger->debug('AjaxAddQuestion', $request->request->all());
         return new JsonResponse([
             'code' => '200',
-            'data' => 'Question added!' .  $request->request->get('title'),
-            'response' => $request->request->all()
+            'response' => [
+                'survey' => $survey->toArray(),
+                'questions' => $questions
+            ]
+        ]);
+    }
+    
+    public function ajaxAddQuestion($id, Request $request, LoggerInterface $logger){
+        
+        $request->request->replace(json_decode($request->getContent(), true));
+        
+        $em = $this->getDoctrine()->getManager();
+        $survey = $em->getRepository(Survey::class)->find($id);
+        
+        if($request->request->get('id')){
+            $question = $em->getRepository(Question::class)->find($request->request->get('id'));
+        }else{
+            $question = new Question();
+        }
+        
+        $question->title = $request->request->get('title', 'Not defined');
+        $question->description = $request->request->get('description', null);
+        $question->page = $request->request->get('page', 0);
+        $question->type = $request->request->get('type', 'text');
+        $question->number = $request->request->get('number', 0);
+        $question->setOptions($request->request->get('options', []));
+        $question->setSurvey($survey);
+        
+        $oldAnswers = $question->getAnswers();
+        foreach ($oldAnswers as $answer){
+            $em->remove($answer);
+        }
+        
+        $newAnswers = $request->request->get('answers', []);
+        foreach ($newAnswers as $key => $answer){
+            $_answer = new Answer();
+            $_answer->title = $answer['title'];
+            $_answer->number = $key;
+            $_answer->setQuestion($question);
+            $em->persist($_answer);
+        }
+     
+        
+        $em->persist($question);
+        $em->flush();
+        $em->clear();
+        
+        $logger->debug('AjaxAddQuestion', $request->request->all());
+        
+        $_question = $em->getRepository(Question::class)->find($question->getId());
+        
+        return new JsonResponse([
+            'code' => '200',
+            'response' => $_question->toArray()
         ]);
             
         
+    }
+    
+    public function getQuestionHTML($id){
+        
+        $em = $this->getDoctrine()->getManager();
+        $question = $em->getRepository(Question::class)->find($id);
+        
+        return $this->render(
+            'survey/question/index.html.twig',[
+               'question' => $question
+            ]
+        );
     }
     
 }

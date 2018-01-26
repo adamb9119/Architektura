@@ -3,13 +3,15 @@
 {% block form %}
     
     <h1 class="text-center">{{ survey.title }}</h1>
-    {% if survey.entry_text and page == 0 %}
+    {% if survey.entry_text and page == 1 %}
     <div class="entry">
         {{survey.entry_text | raw}}
     </div>
     {% endif %}
-    <form action="" method="post">
-        
+    <form action="{{path('app_architektura_survey_save', {id: survey.getId()})}}" method="post">
+        {% for question in questions %}
+            {% include './survey/question/index.html.twig' with {'question': question} %}
+        {% endfor %}
         <div class="submit-section">
             <button type="submit" class="btn btn-primary">Send</button>
         </div>

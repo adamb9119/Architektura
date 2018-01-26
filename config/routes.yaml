@@ -33,7 +33,7 @@ app_architektura_admin_survey_remove:
         id: '\d+'
 app_architektura_admin_survey_summary:
     path: /admin/survey/summary/{id}
-    controller: App\Controller\SummaryController::summary
+    controller: App\Controller\SummaryController::getRaport
     requirements:
         id: '\d+'
         
@@ -50,15 +50,30 @@ app_architektura_admin_survey_questions:
     controller: App\Controller\SurveyController::questions
     requirements:
         id: '\d+'
+
+app_architektura_admin_ajax_fetch_survey:
+    path: /admin/question/all/survey/{id}
+    controller: App\Controller\SurveyController::ajaxAllQuestion
+    requirements:
+        id: '\d+'
+
 app_architektura_admin_ajax_question_add:
     path: /admin/question/add/survey/{id}
     controller: App\Controller\SurveyController::ajaxAddQuestion
     requirements:
         id: '\d+'
+        
 app_architektura_admin_ajax_question_new_form:
     path: /admin/question/form/new
     controller: App\Controller\SurveyController::ajaxGetQuestionNewForm
         
+        
+        
+app_architektura_survey_get_question_html:
+    path: /question/{id}/html
+    controller: App\Controller\SurveyController::getQuestionHTML
+    requirements:
+        id: '\d+'
         
 app_architektura_survey:
     path: /survey/{id}/{slug}
@@ -67,14 +82,24 @@ app_architektura_survey:
         id: '\d+'
     defaults:
         slug: ''
+        
+app_architektura_survey_save:
+    path: /save/{id}
+    controller: App\Controller\FrontController::save
+    requirements:
+        id: '\d+'
+        
 app_architektura_survey_pages:
     path: /survey/{id}/{slug}/page/{page}
     controller: App\Controller\FrontController::getSurvey
     requirements:
         id: '\d+'
-    defaults:
-        slug: ''        
-        page: 1
+        
+app_architektura_survey_thanks:
+    path: /survey/{id}/{slug}/thanks
+    controller: App\Controller\FrontController::thanks
+    requirements:
+        id: '\d+'
 
         
 app_architektura_superadmin_survey_list:

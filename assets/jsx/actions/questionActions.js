@@ -22,22 +22,28 @@ export function saveQuestion(page,index,question){
 }
 
 export function __saveQuestion(page,index,question){
-    console.log(question);
+    let data = {...question};
+    data['page'] = page;
+    data['number'] = index;
+
     return function(dispath){
 
-        axios.post('/admin/question/add/survey/6', {
-            question: question,
-            page: page,
-            index: index
-        }, {
+        axios.post(BASE_URL + 'admin/question/add/survey/' + SURVEY_ID, data, {
             headers: {'X-Requested-With': 'XMLHttpRequest'},
         })
         .then((response) => {
-            console.log(response.data);
-            dispath({type:'FETCH_TWEETS_FULFILLED', payload: response.data})
+            
+            axios.get(BASE_URL + 'question/'+ response.data.response.id +'/html').then((responseHTML) => {
+                response.data.response['html'] = responseHTML.data;
+                dispath({type:'SAVE_QUESTION', payload: response.data.response});
+            })
+            //dispath({type:'SAVE_QUESTION', payload: response.data.response});
+
+
         })
         .catch((error) => {
-            dispath({type:'FETCH_TWEETS_REJECTED', payload: error})
+            alert('Error' + error);
+            console.log(error);
         })
     }
 }

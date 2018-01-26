@@ -3,6 +3,9 @@
 {% block title %}Survey questions "{{survey.title}}"{% endblock %}
 
 {% block content %}
+    <script>
+        var SURVEY_ID = {{survey.getId()}};
+    </script>
     <h2 class="page-title">Survey questions "{{survey.title}}"</h2>
     <div id="root">React App</div>
 {% endblock %}

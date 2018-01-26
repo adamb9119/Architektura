@@ -7,7 +7,10 @@ const questionType = {
     title:'',
     description:'',
     type:'text',
-    edit:false
+    edit:true,
+    html:'',
+    options:{},
+    answers:{}
 }
 
 export default function reducer(state = {
@@ -27,9 +30,10 @@ export default function reducer(state = {
          **************************************/
 
         case 'FETCH_SURVEY':{
+            
             return { 
                 ...state, 
-                survey: action.payload
+                survey: {...action.payload.survey, pages: action.payload.questions}
             }
         }
 
@@ -68,7 +72,7 @@ export default function reducer(state = {
         case 'SAVE_QUESTION':{
             let newPages = [...state.survey.pages];
 
-            newPages[action.payload.page][action.payload.index] = action.payload.question;
+            newPages[action.payload.page][action.payload.number] = action.payload;
 
             return { 
                 ...state, 

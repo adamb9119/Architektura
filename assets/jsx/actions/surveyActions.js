@@ -1,27 +1,15 @@
 import get from 'axios';
 
-export function fetchTweets(){
+export function fetchSurvey(){
     return function(dispath){
-        get('http://rest.learncode.academy/api/test123/tweets')
+        get(BASE_URL + 'admin/question/all/survey/' + SURVEY_ID)
         .then((response) => {
-            dispath({type:'FETCH_TWEETS_FULFILLED', payload: response.data})
+            dispath({type:'FETCH_SURVEY', payload: response.data.response})
         })
         .catch((error) => {
-            dispath({type:'FETCH_TWEETS_REJECTED', payload: error})
+            alert('Error' + error);
+            console.log(error);
         })
-    }
-}
-
-export function fetchSurvey(){
-    return {
-        type: 'FETCH_SURVEY',
-        payload: {
-            id: 1,
-            title: 'Moja ankieta',
-            description: 'Opis mojej ankiety!',
-            isSorted: false,
-            pages: []
-        }
     }
 }
 

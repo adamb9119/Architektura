@@ -23,9 +23,6 @@ class AppController extends Controller
 {
 
 
-    public function __construct() {
-       
-    }
     
     public function indexAction()
     {
@@ -77,9 +74,8 @@ class AppController extends Controller
         );
     }
     
-    public function getMessages(){
-        $session = new Session();
-        
+    public function getMessages(Request $request){
+        $session = $request->getSession();
         return $this->render(
             'other/messages.html.twig',
             array('messages' => $session->getFlashBag()->get('notice', array()))

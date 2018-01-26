@@ -9,7 +9,6 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Cocur\Slugify\Slugify;
 use App\Entity\User;
-use App\Entity\Log;
 
 /**
  * @ORM\Table(name="app_survey")
@@ -70,8 +69,15 @@ class Survey
     
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="survey")
+     * @ORM\OrderBy({"page" = "ASC", "number" = "ASC"})
      */
     private $questions;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="survey")
+     * @ORM\OrderBy({"created" = "ASC"})
+     */
+    private $sessions;
     
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="survey")
@@ -88,6 +94,7 @@ class Survey
     {
         $this->status = 0;
         $this->questions = new ArrayCollection();
+        $this->sessions = new ArrayCollection();
         $this->logs = new ArrayCollection();
     }
     
@@ -98,6 +105,33 @@ class Survey
     {
         return $this->questions;
     }
+    /**
+     * @return Collection|App\Entity\Question[]
+     */
+    public function getQuestionsArray()
+    {
+        $questions = $this->getQuestions();
+        $array = [];
+        foreach($questions as $question){
+            $array[] = $question->toArray();
+        }
+        
+        return $array;
+    }
+    /**
+     * @return Collection|App\Entity\Question[]
+     */
+    public function getQuestionsInPagesArray()
+    {
+        $questions = $this->getQuestions();
+        $array = [];
+        foreach($questions as $question){
+            $array[$question->page][] = $question->toArray();
+        }
+        
+        return $array;
+    }
+    
     
     /**
      * @return Collection|App\Entity\Log[]
@@ -105,6 +139,14 @@ class Survey
     public function getLogs()
     {
         return $this->logs;
+    }
+    
+    /**
+     * @return Collection|App\Entity\Session[]
+     */
+    public function getSessions()
+    {
+        return $this->sessions;
     }
     
     public function getUser(): User
@@ -154,6 +196,22 @@ class Survey
     
     public function getSlug(){
         return $this->slug;
+    }
+    
+    public function toArray(){
+        return [
+            'id' => $this->getId(),
+            'title' => $this->title,
+            'entry_text' => $this->entry_text,
+            'ending_text' => $this->ending_text,
+            'status' => $this->status,
+            'date_start' => $this->getDateStart(),
+            'date_end' => $this->getDateEnd(),
+            'slug' => $this->getSlug(),
+            'notify' => $this->getNotify(),
+            'title' => $this->getSlug(),
+
+        ];
     }
     
 }

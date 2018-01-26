@@ -1,0 +1,35 @@
+<div class="question-front {{question.type}}">
+    {% if question.options.show_title is defined and question.options.show_title %}
+    <h3>{{ question.title }}</h3>
+    {% endif %}
+    {% if question.options.show_description is defined and question.options.show_description %}
+    <p>{{ question.description }}</p>
+    {% endif %}
+    
+    {% if question.type == 'single' %}
+        {% for answer in question.answers %}
+            
+            
+            <div class="custom-control custom-radio">
+                <input type="radio" id="answer-{{answer.id}}" name="question[{{question.id}}]" value="{{answer.id}}" class="custom-control-input">
+                <label class="custom-control-label" for="answer-{{answer.id}}">{{answer.title}}</label>
+            </div>
+            
+            
+        {% endfor %}
+        
+    {% elseif question.type == 'multiple' %}
+        {% for answer in question.answers %}
+            
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="answer-{{answer.id}}" name="question[{{question.id}}][]" value="{{answer.id}}" class="custom-control-input">
+                <label class="custom-control-label" for="answer-{{answer.id}}">{{answer.title}}</label>
+            </div>
+            
+        {% endfor %}
+    {% elseif question.type == 'open' %}
+        <div class="form-group">
+            <textarea class="form-control" id="answer" rows="3" name="question[{{question.id}}]"></textarea>
+        </div>
+    {% endif %}
+</div>

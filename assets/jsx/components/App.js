@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as SurveyActions from '../actions/surveyActions';
 import * as PageActions from '../actions/pageActions';
 import Page from './Page';
 
@@ -11,7 +12,7 @@ const _connect = (store) => {
 class App extends React.Component{
 
     componentWillMount(){
-        //this.props.dispatch(fetchSurvey());
+        this.props.dispatch(SurveyActions.fetchSurvey());
     }
 
     changeTitle(){

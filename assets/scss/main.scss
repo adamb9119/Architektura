@@ -44,6 +44,13 @@ form legend{
         padding:15px 0px;
         text-align: center;
     }
+    .question-front{
+        padding: 15px;
+    }
+    .text-thanks{
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
 }
 
 #root{
@@ -116,4 +123,7 @@ form legend{
         }
         
     }
+}
+.answer-row{
+    margin-bottom: 15px;
 }

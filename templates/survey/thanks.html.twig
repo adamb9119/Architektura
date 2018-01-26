@@ -1,0 +1,16 @@
+{% extends "survey.html.twig" %}
+
+{% block form %}
+    
+    <h1 class="text-center">{{ survey.title }}</h1>
+    {% if survey.entry_text|striptags != '&nbsp;' %}
+    <div class="entry text-center text-thanks">
+        {{survey.ending_text | raw}}
+    </div>
+    {% else %}
+    <div class="entry text-center text-thanks">
+        Thanks for your response!
+    </div>
+    {% endif %}
+
+{% endblock %}
